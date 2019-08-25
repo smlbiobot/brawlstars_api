@@ -1,6 +1,8 @@
 import aiohttp
-from .models.player import PlayerModel
+
 from .mixins.tag import TagMixin
+from .models.player import PlayerModel
+
 
 class BrawlStarsAPIError(Exception):
     pass
@@ -15,6 +17,7 @@ class BrawlStarsAPI(BaseAPI, TagMixin):
         self._token = token
         self._test = "Hi there"
         self._session = None
+        self._headers = None
 
     async def setup(self):
         """Run this before other tasks"""
@@ -36,12 +39,20 @@ class BrawlStarsAPI(BaseAPI, TagMixin):
     def test(self):
         return self._test
 
+    @property
+    def headers(self):
+        if self._headers is None:
+            self._headers = dict(
+                Authorization=f"Bearer {self.token}"
+            )
+        return self._headers
+
     def make_url(self, path):
         base = "https://api.brawlstars.com"
         return f"{base}{path}"
 
     async def fetch(self, url):
-        async with self._session.get(url) as resp:
+        async with self._session.get(url, headers=self.headers) as resp:
             try:
                 r = await resp.json()
             except:
@@ -55,4 +66,3 @@ class BrawlStarsAPI(BaseAPI, TagMixin):
         url = self.make_url(path)
         r = await self.fetch(url)
         return PlayerModel(r)
-
