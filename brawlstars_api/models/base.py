@@ -8,12 +8,15 @@ from ..utils import AttrDict
 class BaseModel:
     data: dict = None
 
+    _ddata: AttrDict = None
 
-class BaseBrawlStarsModel(BaseModel, TagMixin):
-    _ddata = None
+    def __post_init__(self):
+        self._ddata = AttrDict(self.data)
 
     @property
     def ddata(self):
-        if self._ddata is None:
-            self._ddata = AttrDict(self.data)
         return self._ddata
+
+
+class BaseBrawlStarsModel(BaseModel, TagMixin):
+    pass

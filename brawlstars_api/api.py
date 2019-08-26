@@ -2,6 +2,8 @@ import aiohttp
 
 from .mixins.tag import TagMixin
 from .models.player import PlayerModel
+from .models.brawler import BrawlerModel
+from typing import List
 
 
 class BrawlStarsAPIError(Exception):
@@ -65,4 +67,10 @@ class BrawlStarsAPI(BaseAPI, TagMixin):
         path = f"/v1/players/%23{player_tag}"
         url = self.make_url(path)
         r = await self.fetch(url)
-        return PlayerModel(r)
+        return PlayerModel(data=r)
+
+    async def get_brawlers(self) -> List[BrawlerModel]:
+        path = f"/v1/brawlers"
+        url = self.make_url(path)
+        r = await self.fetch(url)
+        return [BrawlerModel(data=item) for item in r.get('items', [])]
