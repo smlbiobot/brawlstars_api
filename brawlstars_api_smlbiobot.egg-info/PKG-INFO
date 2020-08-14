@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: brawlstars-api-smlbiobot
+Version: 0.0.1
+Summary: Brawl Stars API
+Home-page: https://github.com/smlbiobot/brawlstars_api
+Author: SML / RoyaleAPI
+Author-email: smlbiobot@gmail.com
+License: UNKNOWN
+Description: A Python implementation of the Brawl Stars API
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: A Python implementation of the Brawl Stars API
